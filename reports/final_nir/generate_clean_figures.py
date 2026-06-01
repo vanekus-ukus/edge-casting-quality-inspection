@@ -75,7 +75,7 @@ def quality() -> None:
             d.text(((bx0 + bx1) / 2, by - 12), f"{value:.3f}", font=SMALL, fill=BLACK, anchor="mb")
         centered_lines(d, cx, y1 + 28, wrap_label(name), LABEL)
     d.text(((x0 + x1) / 2, H - 86), "Профиль модели", font=AXIS, fill=BLACK, anchor="mm")
-    d.text((56, (y0 + y1) / 2), "Значение метрики", font=AXIS, fill=BLACK, anchor="mm")
+    d.text((x0, y0 - 18), "Значение метрики", font=LABEL, fill=BLACK, anchor="lb")
     lx, ly = W / 2 - 230, H - 165
     d.rectangle((lx, ly, lx + 45, ly + 28), fill=GRAY_LIGHT, outline=BLACK, width=2)
     d.text((lx + 60, ly + 14), "F1", font=LABEL, fill=BLACK, anchor="lm")
@@ -113,8 +113,8 @@ def size() -> None:
 
 def pareto() -> None:
     im, d = base("Pareto-компромисс качества и размера модели")
-    x0, y0, x1, y1 = 190, 145, W - 120, H - 220
-    ymin, ymax = 0.970, 0.983
+    x0, y0, x1, y1 = 220, 145, W - 180, H - 220
+    ymin, ymax = 0.969, 0.983
     for tick in [10, 30, 100, 300, 1000, 3000, 10000]:
         x = x0 + (math.log10(tick) - 1) / 3 * (x1 - x0)
         d.line((x, y0, x, y1), fill=GRID, width=1)
@@ -124,12 +124,12 @@ def pareto() -> None:
         d.line((x0, y, x1, y), fill=GRID, width=2)
         d.text((x0 - 12, y), f"{tick:.3f}", font=SMALL, fill=BLACK, anchor="rm")
     d.rectangle((x0, y0, x1, y1), outline=BLACK, width=3)
-    offsets = [(-70, -72), (34, 38), (30, -12), (-260, -52)]
+    offsets = [(-44, -72), (34, 54), (34, -18), (46, 34)]
     for i, (name, _, f1, _, kb, _) in enumerate(MODELS):
         x = x0 + (math.log10(kb) - 1) / 3 * (x1 - x0)
         y = y1 - (f1 - ymin) / (ymax - ymin) * (y1 - y0)
         if name == "micro INT8":
-            d.text((x, y), "★", font=ImageFont.truetype(BOLD, 56), fill=BLACK, anchor="mm")
+            d.text((x, y), "★", font=ImageFont.truetype(BOLD, 52), fill=BLACK, anchor="mm")
         elif name == "edge SBC":
             d.rectangle((x - 18, y - 18, x + 18, y + 18), fill=WHITE, outline=BLACK, width=3)
         elif name == "micro PyTorch":
@@ -139,6 +139,10 @@ def pareto() -> None:
         ox, oy = offsets[i]
         anchor = "rm" if ox < 0 else "lm"
         d.text((x + ox, y + oy), name, font=LABEL, fill=BLACK, anchor=anchor)
+    d.line((x0 + 18, y0 + 28, x1 - 18, y0 + 28), fill=(120, 120, 120), width=2)
+    d.text((x1 - 18, y0 + 12), "выше качество", font=SMALL, fill=BLACK, anchor="rb")
+    d.line((x0 + 18, y1 - 28, x0 + 18, y0 + 28), fill=(120, 120, 120), width=2)
+    d.text((x0 + 28, y1 - 10), "меньше размер", font=SMALL, fill=BLACK, anchor="lb")
     d.text(((x0 + x1) / 2, H - 78), "Размер модели, KB (логарифмическая шкала)", font=AXIS, fill=BLACK, anchor="mm")
     d.text((58, (y0 + y1) / 2), "F1", font=AXIS, fill=BLACK, anchor="mm")
     save(im, "pareto_f1_size_clean")
@@ -188,7 +192,7 @@ def triage() -> None:
         d.text((cx, y - 12), f"{value:.4f}", font=SMALL, fill=BLACK, anchor="mb")
         centered_lines(d, cx, y1 + 28, name.replace(" ", "\n"), LABEL)
     d.text((W / 2, H - 78), "Threshold = 0.95; unsafe errors = 1", font=AXIS, fill=BLACK, anchor="mm")
-    d.text((56, (y0 + y1) / 2), "Доля / метрика", font=AXIS, fill=BLACK, anchor="mm")
+    d.text((x0, y0 - 18), "Доля / метрика", font=LABEL, fill=BLACK, anchor="lb")
     save(im, "triage_summary_clean")
     save(im, "triage_tradeoff")
 

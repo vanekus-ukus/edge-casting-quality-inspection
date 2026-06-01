@@ -16,3 +16,7 @@ Final NIR figures were regenerated in a clean black-and-white academic style: gr
 ## Figure layout update
 
 Fixed figure label layout: size axis note moved below the plot, Pareto labels separated, triage title shortened. Repository URL added to the NIR appendix.
+
+## Final figure label cleanup
+
+Removed problematic vertical axis labels from quality and triage figures. Adjusted Pareto layout so labels stay inside the plot area.
