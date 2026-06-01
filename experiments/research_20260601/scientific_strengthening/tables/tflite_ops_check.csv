@@ -1,0 +1,2 @@
+model,path,size_kb,input_shape,input_dtype,input_quantization,output_shape,output_dtype,output_quantization,ops,nonstandard_ops_observed,notes
+micro_edge_exact_int8,experiments/research_20260601/tflite_exact_micro_edge/exported/micro_edge_exact_int8.tflite,31.2578125,"[1, 128, 128, 3]",<class 'numpy.int8'>,"(0.01859009638428688, -14)","[1, 2]",<class 'numpy.int8'>,"(0.03948507085442543, 10)",CONV_2D;DELEGATE;FULLY_CONNECTED;MAX_POOL_2D;MEAN,False,Verify on target OpenMV/TFLite Micro firmware.

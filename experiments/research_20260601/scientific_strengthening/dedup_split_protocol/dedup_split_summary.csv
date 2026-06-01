@@ -1,0 +1,7 @@
+metric,value
+n_images,7348
+n_groups,2368
+cross_split_groups_original,22
+train_images_clean,5347
+val_images_clean,1229
+test_images_clean,772

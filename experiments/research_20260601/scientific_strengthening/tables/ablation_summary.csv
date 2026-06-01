@@ -1,0 +1,6 @@
+stage,what_changed,accuracy,f1,defective_recall,model_size_kb,latency_ms,interpretation
+1,PC baseline,0.993,0.9945,0.9956,8919.552,12.397,upper quality reference
+2,Raspberry Pi-like lightweight model,0.9902,0.9923,0.9934,6057.5744,4.014,smaller/faster with near-baseline quality
+3,micro-edge SmallCNN PyTorch,0.993,0.9945,0.989,101.3,1.383,micro-edge architecture with very small model
+4,exact INT8 TFLite conversion,0.993,0.9945,0.989,31.3,0.538,deployment-oriented compression
+5,confidence triage threshold=0.98,1.0,,1.0,31.3,0.538,"review_rate=0.249, unsafe_errors=0"

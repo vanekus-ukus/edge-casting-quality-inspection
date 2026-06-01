@@ -1,0 +1,25 @@
+profiles:
+  baseline_pc:
+    model_name: mobilenet_v2
+    input_size: 224
+    pretrained: false
+    batch_size: 32
+    epochs: 5
+    learning_rate: 0.0003
+    notes: "PC baseline, upper quality reference."
+  edge_sbc:
+    model_name: mobilenet_v3_small
+    input_size: 160
+    pretrained: false
+    batch_size: 32
+    epochs: 10
+    learning_rate: 0.0005
+    notes: "Raspberry Pi-like SBC edge profile."
+  micro_edge:
+    model_name: small_cnn
+    input_size: 128
+    pretrained: false
+    batch_size: 64
+    epochs: 10
+    learning_rate: 0.001
+    notes: "OpenMV-like constrained micro-edge profile."

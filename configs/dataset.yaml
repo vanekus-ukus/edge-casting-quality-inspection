@@ -1,0 +1,10 @@
+dataset:
+  kaggle_slug: ravirajsinh45/real-life-industrial-dataset-of-casting-product
+  raw_dir: data/raw
+  processed_dir: data/processed
+  seed: 42
+  val_fraction: 0.2
+  image_extensions: [".jpg", ".jpeg", ".png", ".bmp"]
+  class_names:
+    ok: 0
+    defective: 1

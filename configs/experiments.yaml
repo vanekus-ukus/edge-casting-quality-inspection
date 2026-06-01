@@ -1,0 +1,30 @@
+experiment:
+  seed: 42
+  device: cuda
+  num_workers: 2
+  output_dir: models_trained
+  metrics_dir: reports/metrics
+  tables_dir: reports/tables
+  positive_class: defective
+
+benchmark:
+  warmup_runs: 10
+  timed_runs: 100
+  batch_size: 1
+  profiles:
+    baseline_pc:
+      note: "CPU timing on current workstation."
+    edge_sbc:
+      note: "Proxy timing; rerun on Raspberry Pi-class target for final numbers."
+    micro_edge:
+      note: "Proxy timing; TFLite INT8 size is the main micro-edge artifact."
+
+triage:
+  thresholds: [0.5, 0.6, 0.7, 0.8, 0.9]
+
+robustness:
+  max_samples: 80
+  brightness_factors: [0.75, 1.25]
+  contrast_factors: [0.75, 1.25]
+  blur_radii: [1.0, 2.0]
+  noise_sigmas: [0.03, 0.06]

@@ -1,0 +1,4 @@
+profile,distortion,accuracy,f1,defective_recall
+micro_edge_dedup,brightness_0.75,0.0,0.0,0.0
+micro_edge_dedup,contrast_0.75,0.12,0.0,0.0
+micro_edge_dedup,blur_1.0,0.7,0.0,0.0

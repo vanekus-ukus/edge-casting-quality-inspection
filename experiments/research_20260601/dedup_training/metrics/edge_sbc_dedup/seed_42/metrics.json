@@ -1,0 +1,48 @@
+{
+  "accuracy": 0.9702072538860104,
+  "precision": 0.995475113122172,
+  "recall": 0.9544468546637744,
+  "f1": 0.9745293466223699,
+  "defective_recall": 0.9544468546637744,
+  "confusion_matrix": [
+    [
+      309,
+      2
+    ],
+    [
+      21,
+      440
+    ]
+  ],
+  "classification_report": {
+    "ok": {
+      "precision": 0.9363636363636364,
+      "recall": 0.9935691318327974,
+      "f1-score": 0.9641185647425897,
+      "support": 311.0
+    },
+    "defective": {
+      "precision": 0.995475113122172,
+      "recall": 0.9544468546637744,
+      "f1-score": 0.9745293466223699,
+      "support": 461.0
+    },
+    "accuracy": 0.9702072538860104,
+    "macro avg": {
+      "precision": 0.9659193747429042,
+      "recall": 0.9740079932482859,
+      "f1-score": 0.9693239556824798,
+      "support": 772.0
+    },
+    "weighted avg": {
+      "precision": 0.9716620700238501,
+      "recall": 0.9702072538860104,
+      "f1-score": 0.9703353658391941,
+      "support": 772.0
+    }
+  },
+  "roc_auc": 0.9950478130165793,
+  "profile": "edge_sbc_dedup",
+  "false_ok_count": 21,
+  "false_defective_count": 2
+}

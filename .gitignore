@@ -1,0 +1,12 @@
+.venv/
+data/
+__pycache__/
+*.pyc
+*.log
+backups/
+runs/
+wandb/
+.cache/
+*.pt
+*.pth
+!experiments/**/micro_edge*/**/best.pt

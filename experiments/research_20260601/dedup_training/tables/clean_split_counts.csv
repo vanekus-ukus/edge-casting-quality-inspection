@@ -1,0 +1,7 @@
+split,class,n_images
+train,ok,2325
+train,defective,3022
+val,ok,501
+val,defective,728
+test,ok,311
+test,defective,461
