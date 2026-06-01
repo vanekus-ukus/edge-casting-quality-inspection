@@ -8,3 +8,7 @@
 - Dedup protocol: `experiments/research_20260601/scientific_strengthening/dedup_split_protocol/`
 
 Snapshot excludes the Kaggle dataset, virtual environment, raw/processed data, large model weights, and logs.
+
+## Figure readability update
+
+Final NIR figures were regenerated in a clean black-and-white academic style: grayscale fills, thin grid, no dense hatching. Learning curves are not included in the final PDF.
