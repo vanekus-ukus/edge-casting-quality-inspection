@@ -113,36 +113,52 @@ def size() -> None:
 
 def pareto() -> None:
     im, d = base("Pareto-компромисс качества и размера модели")
-    x0, y0, x1, y1 = 220, 145, W - 180, H - 220
-    ymin, ymax = 0.969, 0.983
+    x0, y0, x1, y1 = 230, 145, W - 160, H - 220
+    xmin_log, xmax_log = math.log10(20), math.log10(12000)
+    ymin, ymax = 0.973, 0.9815
+    def px(kb: float) -> float:
+        return x0 + (math.log10(kb) - xmin_log) / (xmax_log - xmin_log) * (x1 - x0)
+
+    def py(f1: float) -> float:
+        return y1 - (f1 - ymin) / (ymax - ymin) * (y1 - y0)
+
     for tick in [10, 30, 100, 300, 1000, 3000, 10000]:
-        x = x0 + (math.log10(tick) - 1) / 3 * (x1 - x0)
+        if tick < 20:
+            continue
+        x = px(tick)
         d.line((x, y0, x, y1), fill=GRID, width=1)
         d.text((x, y1 + 18), str(tick), font=SMALL, fill=BLACK, anchor="mt")
-    for tick in [0.970, 0.975, 0.980]:
-        y = y1 - (tick - ymin) / (ymax - ymin) * (y1 - y0)
+    for tick in [0.973, 0.975, 0.977, 0.979, 0.981]:
+        y = py(tick)
         d.line((x0, y, x1, y), fill=GRID, width=2)
         d.text((x0 - 12, y), f"{tick:.3f}", font=SMALL, fill=BLACK, anchor="rm")
     d.rectangle((x0, y0, x1, y1), outline=BLACK, width=3)
-    offsets = [(-44, -72), (34, 54), (34, -18), (46, 34)]
+    label_pos = {
+        "baseline PC": (-92, -84, "rm"),
+        "edge SBC": (52, 78, "lm"),
+        "micro PyTorch": (56, -42, "lm"),
+        "micro INT8": (72, 56, "lm"),
+    }
     for i, (name, _, f1, _, kb, _) in enumerate(MODELS):
-        x = x0 + (math.log10(kb) - 1) / 3 * (x1 - x0)
-        y = y1 - (f1 - ymin) / (ymax - ymin) * (y1 - y0)
+        x = px(kb)
+        y = py(f1)
         if name == "micro INT8":
-            d.text((x, y), "★", font=ImageFont.truetype(BOLD, 52), fill=BLACK, anchor="mm")
+            r = 21
+            d.polygon([(x, y - r), (x + r, y), (x, y + r), (x - r, y)], fill=WHITE, outline=BLACK)
+            d.polygon([(x, y - r - 8), (x + r + 8, y), (x, y + r + 8), (x - r - 8, y)], outline=BLACK)
         elif name == "edge SBC":
             d.rectangle((x - 18, y - 18, x + 18, y + 18), fill=WHITE, outline=BLACK, width=3)
         elif name == "micro PyTorch":
             d.polygon([(x, y - 24), (x - 22, y + 18), (x + 22, y + 18)], fill=WHITE, outline=BLACK)
         else:
             d.ellipse((x - 18, y - 18, x + 18, y + 18), fill=WHITE, outline=BLACK, width=3)
-        ox, oy = offsets[i]
-        anchor = "rm" if ox < 0 else "lm"
-        d.text((x + ox, y + oy), name, font=LABEL, fill=BLACK, anchor=anchor)
-    d.line((x0 + 18, y0 + 28, x1 - 18, y0 + 28), fill=(120, 120, 120), width=2)
-    d.text((x1 - 18, y0 + 12), "выше качество", font=SMALL, fill=BLACK, anchor="rb")
-    d.line((x0 + 18, y1 - 28, x0 + 18, y0 + 28), fill=(120, 120, 120), width=2)
-    d.text((x0 + 28, y1 - 10), "меньше размер", font=SMALL, fill=BLACK, anchor="lb")
+        ox, oy, anchor = label_pos[name]
+        tx, ty = x + ox, y + oy
+        d.line((x, y, tx - 8 if anchor == "lm" else tx + 8, ty), fill=(110, 110, 110), width=2)
+        bbox = d.textbbox((tx, ty), name, font=LABEL, anchor=anchor)
+        pad = 5
+        d.rectangle((bbox[0] - pad, bbox[1] - pad, bbox[2] + pad, bbox[3] + pad), fill=WHITE)
+        d.text((tx, ty), name, font=LABEL, fill=BLACK, anchor=anchor)
     d.text(((x0 + x1) / 2, H - 78), "Размер модели, KB (логарифмическая шкала)", font=AXIS, fill=BLACK, anchor="mm")
     d.text((58, (y0 + y1) / 2), "F1", font=AXIS, fill=BLACK, anchor="mm")
     save(im, "pareto_f1_size_clean")
