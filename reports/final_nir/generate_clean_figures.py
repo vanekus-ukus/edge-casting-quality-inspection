@@ -88,7 +88,7 @@ def quality() -> None:
 
 def size() -> None:
     im, d = base("Сравнение размера моделей")
-    x0, y0, x1, y1 = 170, 145, W - 100, H - 230
+    x0, y0, x1, y1 = 210, 145, W - 100, H - 245
     ticks = [10, 30, 100, 300, 1000, 3000, 10000]
     for tick in ticks:
         y = y1 - (math.log10(tick) - 1) / 3 * (y1 - y0)
@@ -104,8 +104,8 @@ def size() -> None:
         d.rectangle((cx - 70, y, cx + 70, y1), fill=fills[i], outline=BLACK, width=3)
         d.text((cx, y - 12), f"{kb:.0f} KB", font=SMALL, fill=BLACK, anchor="mb")
         centered_lines(d, cx, y1 + 28, wrap_label(name), LABEL)
-    d.text(((x0 + x1) / 2, H - 82), "Профиль модели", font=AXIS, fill=BLACK, anchor="mm")
-    d.text((56, (y0 + y1) / 2), "Размер модели, KB (логарифмическая шкала)", font=AXIS, fill=BLACK, anchor="mm")
+    d.text(((x0 + x1) / 2, H - 92), "Профиль модели", font=AXIS, fill=BLACK, anchor="mm")
+    d.text((W / 2, H - 45), "Размер модели, KB (логарифмическая шкала)", font=LABEL, fill=BLACK, anchor="mm")
     save(im, "size_comparison_clean")
     save(im, "size_comparison_log")
     save(im, "model_size_comparison")
@@ -124,7 +124,7 @@ def pareto() -> None:
         d.line((x0, y, x1, y), fill=GRID, width=2)
         d.text((x0 - 12, y), f"{tick:.3f}", font=SMALL, fill=BLACK, anchor="rm")
     d.rectangle((x0, y0, x1, y1), outline=BLACK, width=3)
-    offsets = [(20, -48), (20, 28), (22, -12), (-240, -48)]
+    offsets = [(-70, -72), (34, 38), (30, -12), (-260, -52)]
     for i, (name, _, f1, _, kb, _) in enumerate(MODELS):
         x = x0 + (math.log10(kb) - 1) / 3 * (x1 - x0)
         y = y1 - (f1 - ymin) / (ymax - ymin) * (y1 - y0)
@@ -137,7 +137,8 @@ def pareto() -> None:
         else:
             d.ellipse((x - 18, y - 18, x + 18, y + 18), fill=WHITE, outline=BLACK, width=3)
         ox, oy = offsets[i]
-        d.text((x + ox, y + oy), name, font=LABEL, fill=BLACK, anchor="lm")
+        anchor = "rm" if ox < 0 else "lm"
+        d.text((x + ox, y + oy), name, font=LABEL, fill=BLACK, anchor=anchor)
     d.text(((x0 + x1) / 2, H - 78), "Размер модели, KB (логарифмическая шкала)", font=AXIS, fill=BLACK, anchor="mm")
     d.text((58, (y0 + y1) / 2), "F1", font=AXIS, fill=BLACK, anchor="mm")
     save(im, "pareto_f1_size_clean")
@@ -169,7 +170,7 @@ def latency() -> None:
 
 
 def triage() -> None:
-    im, d = base("Режим ACCEPT/REVIEW для снижения риска автоматического решения")
+    im, d = base("ACCEPT/REVIEW: снижение риска автоматического решения")
     items = [("coverage", 0.8277), ("review rate", 0.1723), ("accepted acc.", 0.9984), ("accepted def. recall", 0.9977)]
     x0, y0, x1, y1 = 170, 145, W - 100, H - 260
     for tick in [0, 0.25, 0.50, 0.75, 1.00]:

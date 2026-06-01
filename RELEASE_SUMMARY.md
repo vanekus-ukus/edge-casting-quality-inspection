@@ -12,3 +12,7 @@ Snapshot excludes the Kaggle dataset, virtual environment, raw/processed data, l
 ## Figure readability update
 
 Final NIR figures were regenerated in a clean black-and-white academic style: grayscale fills, thin grid, no dense hatching. Learning curves are not included in the final PDF.
+
+## Figure layout update
+
+Fixed figure label layout: size axis note moved below the plot, Pareto labels separated, triage title shortened. Repository URL added to the NIR appendix.
